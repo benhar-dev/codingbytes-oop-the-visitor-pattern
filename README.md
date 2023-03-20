@@ -17,7 +17,7 @@ in perpetuity.
 
 ## Overview
 
-This is the final code produced during the Coding bytes video "The Visitor Design Pattern". This code is not a final product and should only be consumed as an addition to watching the tutorial.
+This is the final code produced during the Coding Bytes video "The Visitor Design Pattern". This code is not a final product and should only be consumed as an addition to watching the tutorial.
 
 ## Video Tutorial
 
