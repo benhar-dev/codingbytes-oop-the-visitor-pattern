@@ -1,4 +1,4 @@
-# Coding bytes demo of the Visitor Pattern
+# Coding Bytes demo of the Visitor Pattern
 
 ## Disclaimer
 
