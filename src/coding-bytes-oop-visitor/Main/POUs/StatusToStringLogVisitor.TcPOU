@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="StatusToStringLogVisitor" Id="{319f948f-07d8-4830-b668-293af2d20192}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK StatusToStringLogVisitor IMPLEMENTS I_VisitModules
+VAR
+	stringLog : REFERENCE TO T_MAXSTRING;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Folder Name="Constructor" Id="{4a46cb02-3021-4ccf-a0b7-e6c5d29e0003}" />
+    <Method Name="FB_init" Id="{e13d8d97-4557-4b2c-a1ed-5e7720b793c3}" FolderPath="Constructor\">
+      <Declaration><![CDATA[METHOD FB_init : BOOL
+VAR_INPUT
+	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
+	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
+	StringLog : REFERENCE TO T_MAXSTRING;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[this^.stringLog REF= StringLog;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="VisitModule" Id="{ad27801b-cddf-40a1-b3b0-e40bda0a3f5d}">
+      <Declaration><![CDATA[METHOD VisitModule
+VAR_INPUT
+	Module : I_Module;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[stringLog := concat(stringLog, '[');
+stringLog := concat(stringLog, Module.Name);
+stringLog := concat(stringLog, ']');
+
+IF Module.HasError THEN
+	stringLog := concat(stringLog, ': Has Error ');
+	stringLog := concat(stringLog, Module.GetLastErrorMessage());
+	stringLog := concat(stringLog, '. ');
+ELSE
+	stringLog := concat(stringLog, ': Has No Error. ');
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

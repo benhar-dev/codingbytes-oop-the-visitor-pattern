@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="MAIN" Id="{bf9df157-f388-4279-8558-8a568ce58069}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+	initalised : BOOL := FALSE;
+	
+	infeedModule : Module(Name := 'infeed');
+	processModule : Module(Name := 'process');
+	outfeedModule : Module(Name := 'outfeed');
+	
+	jamSensor : Sensor(Name := 'outfeedJam');
+	
+	statusToStringLogVisitor : StatusToStringLogVisitor(status);
+	statusToStringLogPrinterVisitor : StatusToStringLogPrinterVisitor(statusForPrinter);
+	
+	status : T_MAXSTRING;	
+	statusForPrinter : T_MAXSTRING;	
+
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF NOT initalised THEN
+	
+	initalised := TRUE;
+	infeedModule.SetError('Infeed Jammed');
+
+END_IF
+
+status := '';
+statusForPrinter := '';
+
+infeedModule.Accept(statusToStringLogVisitor);
+processModule.Accept(statusToStringLogVisitor);
+
+infeedModule.Accept(statusToStringLogPrinterVisitor);
+processModule.Accept(statusToStringLogPrinterVisitor);
+outfeedModule.Accept(statusToStringLogPrinterVisitor);
+
+jamSensor.Accept(statusToStringLogPrinterVisitor);]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

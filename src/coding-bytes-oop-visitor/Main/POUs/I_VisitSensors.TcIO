@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <Itf Name="I_VisitSensors" Id="{8b247a8b-5b7e-4de6-8f4f-445f6f7b9eff}">
+    <Declaration><![CDATA[INTERFACE I_VisitSensors
+]]></Declaration>
+    <Method Name="VisitSensor" Id="{b400fa79-623e-4a75-b97a-ba492acee68f}">
+      <Declaration><![CDATA[METHOD VisitSensor
+VAR_INPUT
+	Sensor : I_Sensor;
+END_VAR
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

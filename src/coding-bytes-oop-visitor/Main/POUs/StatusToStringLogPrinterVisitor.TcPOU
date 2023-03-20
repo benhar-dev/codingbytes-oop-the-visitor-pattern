@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="StatusToStringLogPrinterVisitor" Id="{a759818b-cbed-45ff-a5cc-a58374ec8923}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK StatusToStringLogPrinterVisitor IMPLEMENTS I_VisitModules, I_VisitSensors
+VAR
+	stringLog : REFERENCE TO T_MAXSTRING;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Folder Name="Constructor" Id="{d1f34462-f595-490f-89ea-583c8e3cae48}" />
+    <Method Name="FB_init" Id="{3d85aaf6-95c9-4dd6-8ad8-d56f7de56fe1}" FolderPath="Constructor\">
+      <Declaration><![CDATA[METHOD FB_init : BOOL
+VAR_INPUT
+	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
+	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
+	StringLog : REFERENCE TO T_MAXSTRING;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[this^.stringLog REF= StringLog;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="VisitModule" Id="{6cc7e5cf-f37e-4a04-b972-68d5e1e79e6c}">
+      <Declaration><![CDATA[METHOD VisitModule
+VAR_INPUT
+	Module : I_Module;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF Module.HasError THEN
+	RETURN;
+END_IF
+
+stringLog := concat(stringLog, '?');
+stringLog := concat(stringLog, Module.Name);
+stringLog := concat(stringLog, '?');]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="VisitSensor" Id="{413d1d01-5578-4321-ad71-6d4564a94ba0}">
+      <Declaration><![CDATA[METHOD VisitSensor
+VAR_INPUT
+	Sensor : I_Sensor;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[stringLog := concat(stringLog, '<sensor name:=');
+stringLog := concat(stringLog, Sensor.Name);
+stringLog := concat(stringLog, '>');]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

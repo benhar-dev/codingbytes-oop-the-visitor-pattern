@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="Sensor" Id="{118f2f9f-f8f3-401f-a74c-0f78b157dec5}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK Sensor IMPLEMENTS I_Sensor
+VAR
+	_name : T_MAXSTRING;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Folder Name="Constructor" Id="{e25e5da8-c123-42c0-9704-dcf6c5a87ea9}" />
+    <Method Name="Accept" Id="{da742491-9fc7-4d2c-bab3-9f10402972b4}">
+      <Declaration><![CDATA[METHOD PUBLIC Accept
+VAR_INPUT
+	Visitor : I_VisitSensors;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Visitor.VisitSensor(this^);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="FB_init" Id="{1ac5f73f-703b-44b3-9de5-81b20067047b}" FolderPath="Constructor\">
+      <Declaration><![CDATA[METHOD FB_init : BOOL
+VAR_INPUT
+	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
+	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
+	Name : T_MAXSTRING;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_name := Name;]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Name" Id="{b204250e-a703-43d3-8e82-25a9a443ce81}">
+      <Declaration><![CDATA[PROPERTY PUBLIC Name : T_MAXSTRING]]></Declaration>
+      <Get Name="Get" Id="{ae6ac7e8-f99f-4995-b6e5-e6cbd6cf1986}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Name := _name;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+  </POU>
+</TcPlcObject>

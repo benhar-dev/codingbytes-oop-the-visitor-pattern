@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <Itf Name="I_Module" Id="{42a26287-dd54-4ea0-b34f-f9f119ef00c5}">
+    <Declaration><![CDATA[INTERFACE I_Module
+]]></Declaration>
+    <Method Name="GetLastErrorMessage" Id="{a039a7cd-6211-401b-9e8c-b5534efdf5c4}">
+      <Declaration><![CDATA[METHOD PUBLIC GetLastErrorMessage : T_MAXSTRING
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Property Name="HasError" Id="{a2104551-6386-44fe-9548-fe24f493936b}">
+      <Declaration><![CDATA[PROPERTY PUBLIC HasError : BOOL]]></Declaration>
+      <Get Name="Get" Id="{5d42d25e-de91-4b70-b7e8-797214bc4924}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Property Name="Name" Id="{4b8b783f-f896-45aa-a663-9468161d78f3}">
+      <Declaration><![CDATA[PROPERTY PUBLIC Name : T_MAXSTRING]]></Declaration>
+      <Get Name="Get" Id="{68dc8ed6-60c9-4d7a-8486-57df30d5fc62}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+  </Itf>
+</TcPlcObject>

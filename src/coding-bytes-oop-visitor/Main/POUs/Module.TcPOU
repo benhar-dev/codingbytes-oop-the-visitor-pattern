@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="Module" Id="{536964fb-8dff-4305-b0c8-c122cd4efdd2}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK Module IMPLEMENTS I_Module
+VAR
+	_name : T_MAXSTRING;
+	_hasError : BOOL;
+	lastErrorMessage : T_MAXSTRING;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Folder Name="Constructor" Id="{97ff758b-d985-4637-a913-3e6b1d6d4e8b}" />
+    <Method Name="Accept" Id="{fead0fc5-1577-4fe4-9292-f117e10ec8fa}">
+      <Declaration><![CDATA[METHOD PUBLIC Accept
+VAR_INPUT
+	Visitor : I_VisitModules;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Visitor.VisitModule(this^);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="FB_init" Id="{92967521-4cab-431d-9272-894bdd27ace7}" FolderPath="Constructor\">
+      <Declaration><![CDATA[METHOD FB_init : BOOL
+VAR_INPUT
+	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
+	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
+	Name : T_MAXSTRING;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_name := Name;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GetLastErrorMessage" Id="{ff818c69-d547-41fa-b1f6-86c63fe0f168}">
+      <Declaration><![CDATA[METHOD PUBLIC GetLastErrorMessage : T_MAXSTRING
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[GetLastErrorMessage := lastErrorMessage;]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="HasError" Id="{b5664927-9e6e-4e96-a6d0-6e06572fcd66}">
+      <Declaration><![CDATA[PROPERTY PUBLIC HasError : BOOL]]></Declaration>
+      <Get Name="Get" Id="{ff07f5d9-0bba-43a9-8ed8-2b12a263dc7a}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[HasError := _hasError;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="Name" Id="{51855cd9-5421-444a-8965-b6025ea837b8}">
+      <Declaration><![CDATA[PROPERTY PUBLIC Name : T_MAXSTRING]]></Declaration>
+      <Get Name="Get" Id="{f160910b-f869-4001-ad48-ba47155e885f}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Name := _name;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="SetError" Id="{4051edb1-f8a6-48c9-a3d9-67b0d87abed9}">
+      <Declaration><![CDATA[METHOD PUBLIC SetError
+VAR_INPUT
+	Message : T_Maxstring;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[lastErrorMessage := Message;
+_hasError := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>
